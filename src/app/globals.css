@@ -1,26 +1,48 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Base theme variables */
+  color-scheme: light;
+  --board-header-background-color: #0000003d;
+  --dynamic-background-transparent: hsla(250, 47.9%, 45.7%, 0.9);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Light theme */
+[color-mode="light"][data-theme~="light"] {
+  color-scheme: light;
+  --ds-text: #ffff;
+  --ds-background-default: #0000004d;
+  --ds-background-subtle: rgba(9, 30, 66, 0.04);
+  --ds-background-neutral: #091e420f;
+  --ds-icon: #42526e;
+  --ds-text-subtle: #5e6c84;
+  --ds-text-subtlest: #6b778c;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Dark theme */
+[color-mode="dark"][data-theme~="dark:dark"] {
+  color-scheme: dark;
+  --ds-text: #b6c2cf;
+  --ds-background-default: #0000004d;
+  --ds-background-subtle: #a6c5e229;
 }
 
+/* Default styles */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--ds-text);
+  background-color: var(--ds-background-default);
+  background-image: url("https://d2k1ftgv7pobq7.cloudfront.net/images/backgrounds/gradients/rainbow.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Navbar specific styles */
+.navbar-gradient {
+  background: linear-gradient(
+    to bottom,
+    var(--dynamic-background-transparent),
+    var(--board-header-background-color)
+  );
+  border-color: var(--board-header-background-color);
 }
