@@ -10,7 +10,7 @@
 /* Light theme */
 [color-mode="light"][data-theme~="light"] {
   color-scheme: light;
-  --ds-text: #ffff;
+  --ds-text: #9fadbc;
   --ds-background-default: #0000004d;
   --ds-background-subtle: rgba(9, 30, 66, 0.04);
   --ds-background-neutral: #091e420f;
