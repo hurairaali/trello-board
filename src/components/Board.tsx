@@ -12,7 +12,7 @@ type List = {
   title: string;
 };
 
-const BoardPage: FC = () => {
+const Board: FC = () => {
   const navbarIcon = <EllipsisHorizontalIcon className="h-6 w-6" />;
   const navbarText = "My Trello Board";
   const [isAdding, setIsAdding] = useState(false);
@@ -53,4 +53,4 @@ const BoardPage: FC = () => {
   );
 };
 
-export default BoardPage;
+export default Board;

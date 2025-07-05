@@ -1,12 +1,12 @@
 import { FC } from "react";
-import BoardPage from "@/components/Board";
+import Board from "@/components/Board";
 
-const Board: FC = () => {
+const BoardPage: FC = () => {
   return (
     <>
-      <BoardPage />
+      <Board />
     </>
   );
 };
 
-export default Board;
+export default BoardPage;
