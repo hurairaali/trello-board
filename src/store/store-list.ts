@@ -16,4 +16,11 @@ export const useListStore = create<ListStore>((set) => ({
       list: [...state.list, newList],
     }));
   },
+
+  renameList: (id: string, newTitle: string) =>
+    set((state) => ({
+      list: state.list.map((list) =>
+        list.id === id ? { ...list, listName: newTitle } : list
+      ),
+    })),
 }));

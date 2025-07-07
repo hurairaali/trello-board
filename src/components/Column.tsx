@@ -1,16 +1,42 @@
 // components/Column.tsx
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Plus, MoreHorizontal } from "lucide-react";
+import { useListStore } from "@/store/store-list";
 
 interface ColumnProps {
   title: string;
+  id: string;
 }
 
-const Column: FC<ColumnProps> = ({ title }) => {
+const Column: FC<ColumnProps> = ({ title, id }) => {
+  const { renameList } = useListStore();
+  const [isEditing, setIsEditing] = useState(false);
+  const [editListName, setListName] = useState(title);
+
+  const handleBlurOrEnter = () => {
+    if (editListName.trim() && editListName !== title) {
+      renameList(id, editListName.trim());
+    }
+    setIsEditing(false);
+  };
+
   return (
     <div className="bg-[#181818] rounded-lg shadow-md p-4 flex flex-col justify-between h-fit w-72">
       <div className="flex justify-between items-start mb-4">
-        <span className="ds-text  lowercase text-md">{title}</span>
+        {isEditing ? (
+          <input
+            type="text"
+            value={editListName}
+            onChange={(e) => setListName(e.target.value)}
+            onBlur={handleBlurOrEnter}
+            autoFocus
+            className="w-full h-8 p-2 rounded-md bg-[#222218] border border-gray-500 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-sm"
+          />
+        ) : (
+          <span className="ds-text text-md" onClick={() => setIsEditing(true)}>
+            {title}
+          </span>
+        )}
         <MoreHorizontal size={20} className="text-white" />
       </div>
 

@@ -22,7 +22,7 @@ const Board: FC = () => {
           {lists.map((list) => (
             <>
               <li className="h-full flex-shrink-0">
-                <Column key={list.id} title={list.listName} />
+                <Column id={list.id} title={list.listName} />
               </li>
             </>
           ))}
