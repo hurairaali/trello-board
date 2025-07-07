@@ -6,25 +6,13 @@ import { useState } from "react";
 import AddListButton from "@/components/AddListButton";
 import Column from "@/components/Column";
 import AddListForm from "@/components/Modal";
-
-type List = {
-  id: string;
-  title: string;
-};
+import { useListStore } from "@/store/store-list";
 
 const Board: FC = () => {
   const navbarIcon = <EllipsisHorizontalIcon className="h-6 w-6" />;
   const navbarText = "My Trello Board";
   const [isAdding, setIsAdding] = useState(false);
-  const [lists, setLists] = useState<List[]>([]);
-  const handleAddList = (name: string) => {
-    const newList = {
-      id: crypto.randomUUID(),
-      title: name,
-    };
-    setLists((prev) => [...prev, newList]);
-    setIsAdding(false);
-  };
+  const lists = useListStore((state) => state.list);
   return (
     <main className="h-screen w-full flex flex-col">
       <Navbar icon={navbarIcon} text={navbarText} />
@@ -34,17 +22,14 @@ const Board: FC = () => {
           {lists.map((list) => (
             <>
               <li className="h-full flex-shrink-0">
-                <Column key={list.id} title={list.title} />
+                <Column key={list.id} title={list.listName} />
               </li>
             </>
           ))}
         </ol>
 
         {isAdding ? (
-          <AddListForm
-            onAdd={handleAddList}
-            onCancel={() => setIsAdding(false)}
-          />
+          <AddListForm onCancel={() => setIsAdding(false)} />
         ) : (
           <AddListButton onClick={() => setIsAdding(true)} />
         )}

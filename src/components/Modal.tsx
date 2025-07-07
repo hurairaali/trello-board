@@ -2,20 +2,16 @@
 
 import { useState } from "react";
 import { X } from "lucide-react";
+import { useListStore } from "@/store/store-list";
 
-export default function AddListForm({
-  onAdd,
-  onCancel,
-}: {
-  onAdd: (name: string) => void;
-  onCancel: () => void;
-}) {
+export default function AddListForm({ onCancel }: { onCancel: () => void }) {
   const [listName, setListName] = useState("");
+  const { CreateList } = useListStore();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (listName.trim()) {
-      onAdd(listName.trim());
+      CreateList(listName);
       setListName("");
     }
   };
@@ -42,7 +38,7 @@ export default function AddListForm({
           Add list
         </button>
         <button
-          type="button"
+          type="submit"
           onClick={onCancel}
           aria-label="Cancel"
           className="text-gray-300 hover:text-white transition p-2 rounded-md hover:bg-white/10"
