@@ -19,21 +19,21 @@ export default function AddListForm({ onCancel }: { onCancel: () => void }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-[#18180b] text-white rounded-lg shadow-lg h-fit p-4 space-y-4 font-light animate-in fade-in duration-200 w-[16rem] min-w-[16rem] max-w-[16rem]"
+      className="bg-[#18180b] text-white rounded-lg shadow-lg h-fit p-2  font-light animate-in fade-in duration-200 w-[16rem] min-w-[16rem] max-w-[16rem]"
     >
       <input
         type="text"
         placeholder="Enter list name..."
-        className="w-full p-2 rounded-md bg-[#222218] border border-gray-500 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-sm"
+        className=" h-8 p-2 rounded-md bg-[#222218] border border-gray-500 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-sm"
         value={listName}
         onChange={(e) => setListName(e.target.value)}
         autoFocus
       />
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 pt-2 px-0">
         <button
           type="submit"
-          className="bg-[#60aaff] text-white px-4 py-2 rounded-md hover:bg-blue-400 transition text-sm"
+          className="bg-[#579Dff]  px-4 py-2 font-light rounded-md hover:bg-blue-400 transition text-sm text-[#1D2125]"
         >
           Add list
         </button>

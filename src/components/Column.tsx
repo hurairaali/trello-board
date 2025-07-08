@@ -17,8 +17,8 @@ const Column: FC<List> = ({ listName, id }) => {
   };
 
   return (
-    <div className="bg-[#181818] rounded-lg shadow-md p-4 flex flex-col justify-between h-fit w-72">
-      <div className="flex justify-between items-start mb-4">
+    <div className="bg-[#181818] rounded-lg shadow-md p-1 flex flex-col justify-between h-fit w-72">
+      <div className="flex justify-between items-center p-2">
         {isEditing ? (
           <input
             type="text"
@@ -26,17 +26,20 @@ const Column: FC<List> = ({ listName, id }) => {
             onChange={(e) => setListName(e.target.value)}
             onBlur={handleBlurOrEnter}
             autoFocus
-            className="w-full h-8 p-2 rounded-md bg-[#222218] border border-gray-500 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-sm"
+            className=" h-8 p-2 rounded-md bg-[#222218] border border-gray-500 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-sm"
           />
         ) : (
-          <span className="ds-text text-md" onClick={() => setIsEditing(true)}>
-            {listName}
-          </span>
+          <button
+            className="w-full text-left cursor-pointer h-8"
+            onClick={() => setIsEditing(true)}
+          >
+            <span className="ds-text text-md">{listName}</span>
+          </button>
         )}
-        <MoreHorizontal size={20} className="text-white" />
+        <MoreHorizontal size={16} className="text-white" />
       </div>
 
-      <div className="mt-auto">
+      <div className="mt-auto p-2">
         <button className="flex items-center text-gray-400 text-sm hover:underline">
           <Plus size={14} className="mr-1" />
           Add a card
