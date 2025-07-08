@@ -1,5 +1,5 @@
 // components/Column.tsx
-import { FC, useState } from "react";
+import { FC, memo, useState } from "react";
 import { Plus, MoreHorizontal } from "lucide-react";
 import { useListStore } from "@/store/store-list";
 
@@ -9,10 +9,10 @@ interface ColumnProps {
 }
 
 const Column: FC<ColumnProps> = ({ title, id }) => {
-  const { renameList } = useListStore();
+  const renameList = useListStore((state) => state.renameList);
   const [isEditing, setIsEditing] = useState(false);
   const [editListName, setListName] = useState(title);
-
+  console.log("Column rendered with title:", title, "and id:", id);
   const handleBlurOrEnter = () => {
     if (editListName.trim() && editListName !== title) {
       renameList(id, editListName.trim());
@@ -50,4 +50,4 @@ const Column: FC<ColumnProps> = ({ title, id }) => {
   );
 };
 
-export default Column;
+export default memo(Column);
