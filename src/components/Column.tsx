@@ -4,17 +4,16 @@ import { Plus, MoreHorizontal } from "lucide-react";
 import { useListStore } from "@/store/store-list";
 
 interface ColumnProps {
-  title: string;
+  listName: string;
   id: string;
 }
 
-const Column: FC<ColumnProps> = ({ title, id }) => {
+const Column: FC<ColumnProps> = ({ listName, id }) => {
   const renameList = useListStore((state) => state.renameList);
   const [isEditing, setIsEditing] = useState(false);
-  const [editListName, setListName] = useState(title);
-  console.log("Column rendered with title:", title, "and id:", id);
+  const [editListName, setListName] = useState(listName);
   const handleBlurOrEnter = () => {
-    if (editListName.trim() && editListName !== title) {
+    if (editListName.trim() && editListName !== listName) {
       renameList(id, editListName.trim());
     }
     setIsEditing(false);
@@ -34,7 +33,7 @@ const Column: FC<ColumnProps> = ({ title, id }) => {
           />
         ) : (
           <span className="ds-text text-md" onClick={() => setIsEditing(true)}>
-            {title}
+            {listName}
           </span>
         )}
         <MoreHorizontal size={20} className="text-white" />
