@@ -23,4 +23,9 @@ export const useListStore = create<ListStore>((set) => ({
         list.id === id ? { ...list, listName: newTitle } : list
       ),
     })),
+
+  removeList: (idToRemove: string) =>
+    set((state) => ({
+      list: state.list.filter((list) => list.id !== idToRemove),
+    })),
 }));
