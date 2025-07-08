@@ -2,16 +2,13 @@
 import { FC, memo, useState } from "react";
 import { Plus, MoreHorizontal } from "lucide-react";
 import { useListStore } from "@/store/store-list";
+import { List } from "@/types/types";
 
-interface ColumnProps {
-  listName: string;
-  id: string;
-}
-
-const Column: FC<ColumnProps> = ({ listName, id }) => {
+const Column: FC<List> = ({ listName, id }) => {
   const renameList = useListStore((state) => state.renameList);
   const [isEditing, setIsEditing] = useState(false);
   const [editListName, setListName] = useState(listName);
+
   const handleBlurOrEnter = () => {
     if (editListName.trim() && editListName !== listName) {
       renameList(id, editListName.trim());

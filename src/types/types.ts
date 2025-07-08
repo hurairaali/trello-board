@@ -1,4 +1,4 @@
-type List = { id: string; listName: string };
+export type List = { id: string; listName: string };
 
 export type ListStore = {
   list: List[];
