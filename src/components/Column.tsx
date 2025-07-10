@@ -1,5 +1,5 @@
 // components/Column.tsx
-import { FC, memo, useState, useRef } from "react";
+import { FC, memo, useState, ChangeEvent, useRef } from "react";
 import { Plus, MoreHorizontal } from "lucide-react";
 import { useListStore } from "@/store/store-list";
 import ListActionsMenu from "@/components/ListActionsMenu";
@@ -16,16 +16,20 @@ const Column: FC<ColumnProps> = ({ listName, id, setIsAdding }) => {
   const removeList = useListStore((state) => state.removeList);
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editListName, setListName] = useState(listName);
+  const [editListName, setEditListName] = useState(listName);
   const [showMenu, setShowMenu] = useState(false);
 
-  const handleBlurOrEnter = () => {
-    if (editListName.trim() && editListName !== listName) {
-      renameList(id, editListName.trim());
+  const handleEditInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setEditListName(e.target.value);
+  };
+
+  const listRename = () => {
+    const trimmedName = editListName.trim();
+    if (trimmedName && trimmedName !== listName) {
+      renameList(id, trimmedName);
     }
     setIsEditing(false);
   };
-
   const handleArchive = () => {
     removeList(id);
     setShowMenu(false); // close menu after action
@@ -50,8 +54,8 @@ const Column: FC<ColumnProps> = ({ listName, id, setIsAdding }) => {
           <input
             type="text"
             value={editListName}
-            onChange={(e) => setListName(e.target.value)}
-            onBlur={handleBlurOrEnter}
+            onChange={handleEditInputChange}
+            onBlur={listRename}
             autoFocus
             className=" h-8 p-2 rounded-md bg-[#222218] border border-gray-500 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-sm"
           />
