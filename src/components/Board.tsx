@@ -21,7 +21,7 @@ const Board: FC = () => {
         <ol className="flex gap-3 item-start h-full">
           {lists.map((list) => (
             <>
-              <li className="h-full flex-shrink-0">
+              <li key={list.id} className="h-full flex-shrink-0">
                 <Column id={list.id} listName={list.listName} />
               </li>
             </>
