@@ -20,15 +20,13 @@ const Board: FC = () => {
       <div className="p-3 overflow-x-auto flex gap-3 flex-grow ">
         <ol className="flex gap-3 item-start h-full">
           {lists.map((list) => (
-            <>
-              <li key={list.id} className="h-full flex-shrink-0">
-                <Column
-                  id={list.id}
-                  listName={list.listName}
-                  setIsAdding={setIsAdding}
-                />
-              </li>
-            </>
+            <li key={list.id} className="h-full flex-shrink-0">
+              <Column
+                id={list.id}
+                listName={list.listName}
+                setIsAdding={setIsAdding}
+              />
+            </li>
           ))}
         </ol>
 
