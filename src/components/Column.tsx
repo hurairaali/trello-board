@@ -1,10 +1,10 @@
 // components/Column.tsx
-import { FC, memo, useState, useMemo, ChangeEvent, useRef } from "react";
+import { FC, memo } from "react";
 import { Plus, MoreHorizontal } from "lucide-react";
-import { useListStore } from "@/store/store-list";
 import ListActionsMenu from "@/components/ListActionsMenu";
-import { useClickAway } from "react-use";
 import AddListForm from "@/components/Modal";
+import { useColumnLogic } from "@/hooks/useColumnLogic";
+
 import Card from "./Card";
 type ColumnProps = {
   listName: string;
@@ -12,46 +12,18 @@ type ColumnProps = {
   setIsAdding: (isAdding: boolean) => void;
 };
 const Column: FC<ColumnProps> = ({ listName, id, setIsAdding }) => {
-  const menuRef = useRef(null);
-  const renameList = useListStore((state) => state.renameList);
-  const removeList = useListStore((state) => state.removeList);
-  const [activeMode, setActiveMode] = useState<
-    null | "menu" | "addCard" | "editing" | "addingList"
-  >(null);
-
-  const [editListName, setEditListName] = useState(listName);
-
-  const handleEditInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEditListName(e.target.value);
-  };
-
-  const listRename = () => {
-    const trimmedName = editListName.trim();
-    if (trimmedName && trimmedName !== listName) {
-      renameList(id, trimmedName);
-    }
-    setActiveMode(null);
-  };
-  const handleArchive = () => {
-    removeList(id);
-    setActiveMode(null);
-  };
-
-  useClickAway(menuRef, () => activeMode !== "editing" && setActiveMode(null));
-
-  const toggleMenu = () => {
-    setActiveMode(activeMode === "menu" ? null : "menu");
-    setIsAdding(false);
-  };
-
-  const handleAddCard = () => {
-    setActiveMode("addCard");
-    setIsAdding(false);
-  };
-  const startEditing = () => {
-    setActiveMode("editing");
-    setIsAdding(false);
-  };
+  const {
+    menuRef,
+    activeMode,
+    setActiveMode,
+    editListName,
+    handleEditInputChange,
+    listRename,
+    handleArchive,
+    toggleMenu,
+    handleAddCard,
+    startEditing,
+  } = useColumnLogic(id, listName, setIsAdding);
 
   return (
     <div className="bg-[#181818] rounded-lg shadow-md p-3 flex flex-col justify-between h-fit w-72 relative">
@@ -89,9 +61,7 @@ const Column: FC<ColumnProps> = ({ listName, id, setIsAdding }) => {
             />
           </button>
         </div>
-        {/* {cards.map((card: any) => ( */}
         <Card listId={id} />
-        {/* ))} */}
 
         {activeMode !== "addCard" && (
           <div className="mt-auto p-2">
