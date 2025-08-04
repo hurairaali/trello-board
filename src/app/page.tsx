@@ -7,9 +7,9 @@ export default function Home() {
         <h1 className="text-4xl font-bold text-white">
           Welcome to My Trello Board
         </h1>
-        <p className="text-lg text-white">
+        {/* <p className="text-lg text-white">
           This is a simple Trello board clone built with Next.js and Zustand.
-        </p>
+        </p> */}
         <div className="pt-8">
           <a
             href="/board"

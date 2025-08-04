@@ -4,16 +4,37 @@ import { useState } from "react";
 import { X } from "lucide-react";
 import { useListStore } from "@/store/store-list";
 
-export default function AddListForm({ onCancel }: { onCancel: () => void }) {
-  const [listName, setListName] = useState("");
+type AddListFormProps = {
+  onCancel: () => void;
+  actionType: string;
+  placeholder?: string;
+  listId?: string; // Optional, used when adding a card
+};
+const AddListForm: React.FC<AddListFormProps> = ({
+  onCancel,
+  actionType,
+  placeholder,
+  listId,
+}) => {
+  const [inputValue, setInputValue] = useState("");
+
   const { CreateList } = useListStore();
+  const CreateCard = useListStore((state) => state.createdCard);
+  const getCardsByListId = useListStore((state) => state.getCardsByListId);
+  const cards = listId ? getCardsByListId(listId) : [];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (listName.trim()) {
-      CreateList(listName);
-      setListName("");
+    if (!inputValue.trim()) return;
+
+    if (actionType === "add Card" && listId) {
+      CreateCard(listId, inputValue.trim());
+    } else {
+      CreateList(inputValue.trim());
     }
+
+    setInputValue(""); // Reset input after submission
+    onCancel(); // Optionally close the form
   };
 
   return (
@@ -23,10 +44,10 @@ export default function AddListForm({ onCancel }: { onCancel: () => void }) {
     >
       <input
         type="text"
-        placeholder="Enter list name..."
+        placeholder={placeholder || "Enter list name..."}
         className=" h-8 p-2 rounded-md bg-[#222218] border border-gray-500 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-sm"
-        value={listName}
-        onChange={(e) => setListName(e.target.value)}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
         autoFocus
       />
 
@@ -35,7 +56,7 @@ export default function AddListForm({ onCancel }: { onCancel: () => void }) {
           type="submit"
           className="bg-[#579Dff]  px-4 py-2 font-light rounded-md hover:bg-blue-400 transition text-sm text-[#1D2125]"
         >
-          Add list
+          {actionType}
         </button>
         <button
           type="submit"
@@ -48,4 +69,6 @@ export default function AddListForm({ onCancel }: { onCancel: () => void }) {
       </div>
     </form>
   );
-}
+};
+
+export default AddListForm;

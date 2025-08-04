@@ -12,6 +12,7 @@ const Board: FC = () => {
   const navbarIcon = <EllipsisHorizontalIcon className="h-6 w-6" />;
   const navbarText = "My Trello Board";
   const [isAdding, setIsAdding] = useState(false);
+
   const lists = useListStore((state) => state.list);
   return (
     <main className="h-screen w-full flex flex-col">
@@ -31,7 +32,11 @@ const Board: FC = () => {
         </ol>
 
         {isAdding ? (
-          <AddListForm onCancel={() => setIsAdding(false)} />
+          <AddListForm
+            onCancel={() => setIsAdding(false)}
+            actionType="Add list"
+            placeholder="Enter list name"
+          />
         ) : (
           <AddListButton onClick={() => setIsAdding(true)} />
         )}
