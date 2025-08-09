@@ -26,7 +26,14 @@
   --ds-background-default: #0000004d;
   --ds-background-subtle: #a6c5e229;
 }
-
+/* Hide scrollbar but still scrollable */
+.scrollbar-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
 /* Default styles */
 body {
   color: var(--ds-text);

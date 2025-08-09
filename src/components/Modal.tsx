@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { X } from "lucide-react";
 import { useListStore } from "@/store/store-list";
-
+import clsx from "clsx";
+import Button from "./Button";
 type AddListFormProps = {
   onCancel: () => void;
   actionType: string;
@@ -27,7 +28,7 @@ const AddListForm: React.FC<AddListFormProps> = ({
     e.preventDefault();
     if (!inputValue.trim()) return;
 
-    if (actionType === "add Card" && listId) {
+    if (actionType === "Add card" && listId) {
       CreateCard(listId, inputValue.trim());
     } else {
       CreateList(inputValue.trim());
@@ -40,21 +41,34 @@ const AddListForm: React.FC<AddListFormProps> = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-[#18180b] text-white rounded-lg shadow-lg h-fit p-2  font-light animate-in fade-in duration-200 w-[16rem] min-w-[16rem] max-w-[16rem]"
+      className={clsx(
+        "bg-[#18180b] text-white rounded-lg shadow-lg h-fit p-2 font-light animate-in fade-in duration-200 w-[16rem] min-w-[16rem] max-w-[16rem]",
+        {
+          "px-0": actionType === "Add card",
+          "px-2": actionType !== "Add card",
+        }
+      )}
     >
-      <input
-        type="text"
+      <textarea
         placeholder={placeholder || "Enter list name..."}
-        className=" h-8 p-2 rounded-md bg-[#222218] border border-gray-500 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-sm"
+        className={clsx(
+          "w-full rounded-md bg-[#222218] border border-gray-500 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-sm resize-none field-sizing-content min-h-[56px] max-h-[300px] p-2"
+        )}
+        rows={actionType === "Add card" ? 3 : 1}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            handleSubmit(e);
+          }
+        }}
         autoFocus
       />
-
       <div className="flex items-center gap-3 pt-2 px-0">
         <button
           type="submit"
-          className="bg-[#579Dff]  px-4 py-2 font-light rounded-md hover:bg-blue-400 transition text-sm text-[#1D2125]"
+          className="bg-[#579Dff]  px-3 py-2 font-light rounded-md hover:bg-blue-400 transition text-sm text-[#1D2125]"
         >
           {actionType}
         </button>
